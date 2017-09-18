@@ -1,0 +1,113 @@
+@import "common/var";
+@import "common/utils";
+
+.r-promo{
+  height: 250px;
+  width: 300px;
+  overflow: hidden;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.r-promo-h{
+  background-color: #da1313;
+  margin: 0 -4px 4px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+  min-height: 40px;
+  padding: 7px 5px 7px 175px;
+
+  img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-left: 3px solid #fff;
+  }
+
+  h3{
+    font-size: 11px;
+    padding: 0;
+    margin: 0;
+    line-height: 40px;
+    color: #fff;
+    display: none;
+  }
+}
+
+.r-promo-btn{
+  font-size: 10px;
+  color: #fff;
+  padding: 0;
+  line-height: 26px;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover, &:focus{
+    text-decoration: underline;
+    color: #fff;
+  }
+}
+
+.r-promo-i{
+  position: relative;
+  background-color: #fff;
+  margin-bottom: 5px;
+  display: block;
+  border: 1px solid #ddd;
+  overflow: visible;
+  padding: 8px 10px 8px 100px;
+  min-height: 60px;
+  text-align: left;
+  color: #000;
+  font-size: 10px;
+  cursor: pointer;
+
+  &:hover, &:focus{
+    text-decoration: none;
+    color: inherit;
+    background-color: #dedede;
+    .TransitionForAllBrowser();
+  }
+}
+
+.r-promo-img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90px;
+  height: 100%;
+  background: 50% 25% no-repeat #e6e6e6;
+  background-size: cover;
+  border: 1px solid #fff;
+}
+
+.r-promo-t{
+  color: #111;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  padding: 0;
+  text-transform: uppercase;
+  line-height: 1.2;
+  .text-collapsed;
+}
+
+.r-promo-l{
+  color: #666;
+  margin-bottom: 2px;
+  .text-collapsed;
+}
+
+.r-promo-p{
+  margin-bottom: 0;
+  .text-collapsed;
+}
+
+.r-no-img{
+  background: no-repeat center bottom url("http://www.enelradar.com@{no-img-path}no-event-xs.jpg");
+  background-size: cover;
+}

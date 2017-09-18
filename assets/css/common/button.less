@@ -1,0 +1,219 @@
+.btn-m{
+  height: 32px;
+  text-transform: uppercase;
+  border-radius: 0;
+  display: inline-block;
+  padding: 0 12px;
+  white-space: nowrap;
+  line-height: 32px;
+  cursor: pointer;
+  min-width: 90px;
+  text-align: center;
+  font-size: 12px;
+  border : 1px solid transparent;
+  .TransitionForAllBrowser(0.15s all linear);
+
+  &:hover, &:focus{
+    text-decoration: none;
+  }
+
+  &[disabled="disabled"]{
+    cursor: no-drop;
+    opacity: 0.75;
+  }
+
+  &.btn-block{
+    min-width: initial;
+  }
+
+  &.w-auto{
+    min-width: initial;
+  }
+}
+
+.btn-primary{
+  background-color: #e61414;
+  color : white;
+
+  &:hover,&:focus{
+    background-color: @color-primary-h;
+    border-color : @color-primary-h;
+    color : white;
+  }
+
+  &:disabled{
+    background-color: #e61414;
+    color : white;
+    border-color :  #e61414;
+
+    &:hover{
+      background-color: #e61414;
+      color : white;
+      border-color :  #e61414;
+    }
+  }
+}
+
+.btn-social{
+  background-color: transparent;
+  color : white;
+  font-size: 18px;
+  margin: 0 5px;
+  border-radius: 2px;
+  border : none;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  line-height: 24px;
+
+  &:hover, &:focus{
+    color : @color-primary;
+    text-decoration: none;
+    background-color: #fff;
+  }
+}
+
+.btn-white{
+  background-color: #ffffff;
+  color : @color;
+
+  &:hover{
+    color : @color-primary;
+  }
+
+  &:focus{
+    color : @color-secondary;
+  }
+}
+
+.btn-cancel{
+  border : 1px solid gray;
+  background-color: gray;
+  color : white;
+
+  &:hover,&:focus{
+    background-color: #535353;
+    border-color : #535353;
+    color : #fff;
+  }
+}
+
+.login-social{
+  position: relative;
+  background-color: #666;
+  border-radius: 50%;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 2px;
+  border: none;
+  font-size: 14px;
+  .TransitionForAllBrowser();
+
+  i{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin-top: -0.5em;
+    text-align: center;
+  }
+}
+
+.Twitter:hover,
+.Twitter:focus {
+  background-color: @social-tw;
+}
+
+.Facebook:hover,
+.Facebook:focus{
+  background-color: @social-fb;
+}
+
+.Google:hover,
+.Google:focus{
+  background-color: @social-go;
+}
+
+.btn-m-b{
+  min-width: 120px;
+}
+
+.btn-ctr{
+  float: left;
+  color: #535353;
+  font-size: 16px;
+  border : none;
+  background-color: transparent;
+  cursor: pointer;
+  height: 30px;
+  width: 20px;
+  display: block;
+  padding: 5px 0;
+  text-align: center;
+  .TransitionForAllBrowser();
+
+  &:hover{
+    color: #1f1f1f;
+  }
+
+  i.fa-share-square-o{
+    position: relative;
+    top: 1px;
+  }
+}
+
+.btn-date{
+  color: #fff;
+  font-size: 12px;
+  font-family: @font-roboto-condensed;
+  cursor: pointer;
+  border: 1px solid #f2f2f2;
+  height: 34px;
+  padding: 0 22px 0 10px;
+  background-color: #e61414;// #da1313;
+  .TransitionForAllBrowser();
+  .text-collapsed;
+  position: relative;
+  text-align: left;
+  display: block;
+  width: 100%;
+
+  &:hover{
+    background-color: @color-primary-h;
+  }
+
+  i{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -0.5em;
+  }
+}
+
+.btn-plus{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px;
+  height: 34px;
+  padding: 0;
+  background-color: @color-primary;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  border: none;
+  .TransitionForAllBrowser();
+
+  &:hover{
+    background-color: @color-primary-h;
+  }
+}
+
+.btn-auto{
+  display: inline-block;
+  min-width: 36px;
+  font-size: 14px;
+}

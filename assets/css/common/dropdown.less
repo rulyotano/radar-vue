@@ -1,0 +1,31 @@
+.c-dropdown{
+  width: 300px;
+  border-radius: 0;
+
+  .active>a, a:focus, a:hover,
+  .active>span, span:focus, span:hover{
+    background-color: #eee !important;
+  }
+
+  li:last-child>a,
+  li:last-child>span{
+    border-bottom: none;
+  }
+
+  a, li>span{
+    position: relative;
+    display: block;
+    padding: 8px 24px!important;
+    font-size: 11px;
+    color: #535353;
+    cursor: pointer;
+
+    i{
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      font-size: .9em;
+      margin-top: -0.5em;
+    }
+  }
+}

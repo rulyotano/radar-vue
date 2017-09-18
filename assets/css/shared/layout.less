@@ -1,0 +1,109 @@
+body{
+  background-color: @color-bk;
+  font-size: 20px;
+  font-family: @font-roboto;
+
+  @media(max-width: @mobile){
+    font-size: 16px;
+  }
+}
+
+*{
+  outline: none !important;
+
+  &:hover, &:focus{
+    outline: none !important;
+  }
+}
+
+p {
+  margin: 0 0 10px;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.text-center{
+  text-align: center;
+}
+
+#wrap{
+  min-height: 90vh;
+  min-height: ~'calc(100vh - 98px)';
+
+  @media(max-width: @mobile){
+    min-height: ~'calc(100vh - 140px)';
+  }
+}
+
+.s-row{
+  margin-left: -10px;
+  margin-right: -10px;
+
+  &>div{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.n-row{
+  margin-left: 0;
+  margin-right: 0;
+
+  &>div{
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.xs-row{
+  margin-left: -4px;
+  margin-right: -4px;
+
+  &>div{
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+
+
+.ctn{
+  max-width: @max-width;
+  margin: 0 auto;
+  .s-ctn;
+}
+
+
+.footer{
+  background-color: #000;
+  color : white;
+  font-size: 12px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.f-link{
+  font-weight: 200;
+  color : #bbb;
+}
+
+.message-area{
+  position: fixed;
+  z-index: 10000;
+  bottom: 0;
+  left: 20px;
+  width: 50%;
+  min-width: 300px;
+  max-width: 550px;
+}
+
+
+.message-area-f{
+  text-align: right;
+  margin-left: -12px;
+  margin-right: -12px;
+}

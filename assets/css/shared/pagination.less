@@ -1,0 +1,48 @@
+.m-pagination{
+  margin-bottom: 1em;
+  text-align: center;
+
+  .pagination{
+    vertical-align: top;
+    margin: 0;
+  }
+}
+
+.pagination > li {
+  & >a,
+  & > span{
+    min-width: 34px;
+    border-radius: 0 !important;
+    border-color: @color-bk;
+    color: @color;
+    font-size: 14px;
+    font-weight: 300;
+    .TransitionForAllBrowser(0.1s all linear);
+
+    &:hover{
+      color : white;
+      background-color: @color-primary;
+    }
+  }
+}
+
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus{
+  color : white;
+  background-color: @color-primary;
+  border-color : @color-bk;
+}
+
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus{
+  border-color : @color-bk;
+}

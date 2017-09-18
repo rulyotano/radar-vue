@@ -1,0 +1,46 @@
+.subs-f{
+  color: #000;
+  margin-bottom: 1em;
+  padding: 0;
+
+  label{
+    color: #000;
+    text-transform: uppercase;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+}
+
+.subs-field{
+  position: relative;
+
+  .m-control{
+    padding-right: 50px;
+  }
+}
+
+.subs-btn{
+  position: absolute;
+  top: 0;
+  width: 40px;
+  right: 0;
+  height: 100%;
+  color: #666;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  text-align: center;
+  font-size: 20px;
+  .TransitionForAllBrowser(color linear 0.1s);
+
+  &:hover, &:focus{
+    color: #333;
+  }
+
+  &[disabled="disabled"]{
+    cursor: no-drop;
+    color: #666;
+  }
+}

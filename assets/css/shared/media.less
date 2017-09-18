@@ -1,0 +1,51 @@
+.media-i{
+  position: relative;
+  padding-top: @media-ratio;
+  background:  50% 25% no-repeat #e6e6e6;
+  background-size: cover;
+  border: 1px solid #fff;
+}
+
+.media-hover{
+  .fullAbsolute;
+  .TransitionForAllBrowser(0.1s all linear);
+  //.TransformAllBrowser(rotate(-90deg));
+  //.TransitionOrigin(left bottom);
+  color : white;
+  font-size: 10px;
+  text-transform: uppercase;
+  opacity: 0;
+  text-align: center;
+  background-color: rgba(230,0,1,0.85);
+
+  p{
+    margin-bottom: 2px;
+    font-weight: @font-bold;
+  }
+}
+
+.media-hover-i{
+  position: absolute;
+  top : 50%;
+  left : 0;
+  width: 100%;
+  .TransformAllBrowser(translateY(-50%));
+
+  .cancel{
+    display: none;
+    color: #353535;
+    font-size: 12px;
+  }
+}
+
+.more  i{
+  display: inline-block;
+  vertical-align: top;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  background-color: #fff;
+  font-size: 8px;
+  border-radius: 50%;
+  color : @color-primary
+}

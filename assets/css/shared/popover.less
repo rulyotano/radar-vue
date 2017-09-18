@@ -1,0 +1,22 @@
+.popover {
+  max-width: initial;
+  width: 300px;
+  border-radius: 0;
+  box-shadow: none;
+
+  &.bottom{
+    margin-top: 0;
+  }
+}
+
+.popover-to-left {
+  .popover {
+    left: initial !important;
+    right: 0;
+
+    & > .arrow {
+      left: initial;
+      right: 15px;
+    }
+  }
+}
