@@ -6,13 +6,19 @@
         <div class="likes-box">
             <div class="fb-like" data-href="https://www.facebook.com/enelradar/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
         </div>
+        <div>
+            <HightlightEvents v-if="!isMobile"/>
+        </div>
     </div>
 </template>
 
 <script>
+    import HightlightEvents from './HightlightEvents.vue'
     export default {
+        components:{
+            HightlightEvents
+        },
         data () {
-            console.log(this.$store.state.isMobile)
             return {isMobile: this.$store.state.isMobile}
         }
     }

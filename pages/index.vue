@@ -1,18 +1,35 @@
 <template>
-  <section class="container">
-    <div>
-      Radar Event Lists
+  <div>
+    <SiteHeader/>
 
-      <nuxt-link to="/event/buena-fe-en-concierto/e023f23">Event</nuxt-link>      
-      <nuxt-link to="/place/barbaram/e023f23">Place</nuxt-link>      
-      <nuxt-link to="/artist/x-alfonso/e023f23">Artist</nuxt-link>      
+    <div id="wrap" class="ctn">
+        <div class="row s-row">
+            <div class="col-sm-9">
+              <nuxt-child/>
+            </div>
+
+            <div class="col-sm-3 sidebar">
+              <SideBar/>
+            </div>
+        </div>
     </div>
-  </section>
+    
+    <SiteFooter/>
+  </div>
 </template>
 
 <script>
 
+import SiteHeader from '~/components/header/SiteHeader.vue'
+import SiteFooter from '~/components/SiteFooter.vue'
+import SideBar from '~/components/sidebar/SideBar.vue'
+
 export default {
+  components: {
+    SiteHeader,
+    SiteFooter,
+    SideBar
+  }
 }
 </script>
 

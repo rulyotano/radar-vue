@@ -1,4 +1,8 @@
 module.exports = {
+  env: {
+    apiUrl: 'http://www.enelradar.com',
+    imagesPath: "Content/StoredImages"
+  },
   /*
   ** Headers of the page
   */
@@ -21,11 +25,12 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#3B8070' },
+  plugins: [/*'~/plugins/axios'*/],
   /*
   ** Build configuration
   */
   build: {
-    vendor: ['ismobilejs']
+    vendor: ['ismobilejs', 'axios']
     /*
     ** Run ESLINT on save
     */

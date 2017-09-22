@@ -1,27 +1,45 @@
 import * as isMobile from 'ismobilejs'
+import Vuex from 'vuex'
+import radarEventsService from '~/services/radar-events-service'
 
 const checkIfMobile = (context) => {
-  debugger;
   const userAgent = context.isServer ? context.req.headers['user-agent'] : navigator.userAgent
   return isMobile(userAgent).any
 }
 
-export const state = () => ({
-  isMobile: false
-})
+const createStore = () => {
+  let store = new Vuex.Store({
+    state: {
+      isMobile: false,
+      hightlights: []  //list of hight light events
+    },
+    getters: {
+      isMobile: state => state.isMobile
+    },
+    actions: {
+      async nuxtServerInit ({commit, dispatch}, context) {
+        commit('changeMobile', checkIfMobile(context));
+        await dispatch('load');
+      },
+      load({dispatch}){
+        return Promise.all([
+          dispatch('loadHightlights')
+        ])
+      },
+      loadHightlights({commit}){
+        return radarEventsService.hightlights().then(hightlights => commit('setHightlights', hightlights))
+      }
+    },
+    mutations: {
+      changeMobile (state, isMobile) {
+        state.isMobile = isMobile
+      },
+      setHightlights(state, hightlights){
+        state.hightlights = hightlights
+      }
+    }
+  })
+  return store;
+}
 
-export const getters = () => ({
-  isMobile: state => state.isMobile
-})
-
-export const actions = () => ({
-  nuxtServerInit ({commit}, context) {
-    commit('changeMobile', checkIfMobile(context))
-  }
-})
-
-export const mutations = () => ({
-  changeMobile (state, isMobile) {
-    state.isMobile = isMobile
-  }
-})
+export default createStore
