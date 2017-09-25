@@ -17,18 +17,25 @@
 
         <!-- <h1 class="stn-lb">{ category.displayEvents }<span class="stb-lb-r">{ loading ? 'Cargando ...' : (this.props.eventList.total + ' Resultados') } </span></h1> -->
 
-        <!-- <EventListComponent/> -->
+        <EventList/>
     </div>
 </template>
 
 <script>
     import searchConstants from '~/services/search-constants-service'
+    import EventList from '~/components/events-list/EventList.vue'
     export default {
+        components:{
+            EventList
+        },
         data(){
             return {
-                dateFilter: this.$store.state.filters.date,
-                dateOptions: searchConstants.dateOptions
+                dateOptions: searchConstants.dateOptions,
+                loading: false
             }
+        },
+        computed: {
+            dateFilter(){ return this.$store.state.filters.date }
         }        
     }
 </script>
