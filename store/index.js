@@ -11,7 +11,24 @@ const createStore = () => {
   let store = new Vuex.Store({
     state: {
       isMobile: false,
-      hightlights: []  //list of hight light events
+      hightlights: [],  //list of hight light events
+      eventsData: {
+        page: 0,
+        total: 0,
+        pageSize: 0,
+        events: []
+      },
+      filters: {
+        time_s: undefined,
+        time_e: undefined,
+        cover_max: undefined,
+        cover_min: undefined,
+        date: undefined,
+        loc: undefined,
+        q: undefined,
+        cat: undefined,
+        page: undefined
+      }
     },
     getters: {
       isMobile: state => state.isMobile
@@ -23,11 +40,15 @@ const createStore = () => {
       },
       load({dispatch}){
         return Promise.all([
-          dispatch('loadHightlights')
+          dispatch('loadHightlights'),
+          dispatch('loadEvents')
         ])
       },
       loadHightlights({commit}){
         return radarEventsService.hightlights().then(hightlights => commit('setHightlights', hightlights))
+      },
+      loadEvents({commit}){
+        return radarEventsService.list(this.state.filters).then(eventsData => commit('setEvents', eventsData))
       }
     },
     mutations: {
@@ -36,6 +57,15 @@ const createStore = () => {
       },
       setHightlights(state, hightlights){
         state.hightlights = hightlights
+      },
+      setEvents(state, eventsData){
+        if (eventsData && eventsData.Data)
+          state.eventsData = {
+            page: eventsData.Page,
+            total: eventsData.Total,
+            pageSize: eventsData.PageSize,
+            events:  eventsData.Data
+          }
       }
     }
   })

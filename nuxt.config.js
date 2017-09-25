@@ -7,7 +7,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'radar-vue',
+    title: 'Radar',
     meta: [
       { 'http-equiv': 'Content-Type', content:'text/html; charset=utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -18,8 +18,8 @@ module.exports = {
     ]
   },
   css:[ 
-    '~/assets/css/style.css',
     '~/assets/bootstrap-b.min.css',
+    '~/assets/css/style.css',
   ],
   /*
   ** Customize the progress-bar color
@@ -30,7 +30,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['ismobilejs', 'axios']
+    vendor: ['ismobilejs', 'axios', 'moment', 'lodash']
     /*
     ** Run ESLINT on save
     */
