@@ -23,8 +23,10 @@ export default {
   },
   data(){
     return {
-      testImageUrl: imagesService.imageUrl('w1gtk14e.gpk', "medium")
     }
+  },
+  fetch({store, params}){
+    return store.dispatch('loadEvents');    
   }
 }
 </script>

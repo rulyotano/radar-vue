@@ -15,7 +15,7 @@
 
         
 
-        <!-- <h1 class="stn-lb">{ category.displayEvents }<span class="stb-lb-r">{ loading ? 'Cargando ...' : (this.props.eventList.total + ' Resultados') } </span></h1> -->
+        <h1 class="stn-lb">{{category.displayEvents}}<span class="stb-lb-r">{{ total + ' Resultados'}} </span></h1>
 
         <EventList/>
     </div>
@@ -23,6 +23,7 @@
 
 <script>
     import searchConstants from '~/services/search-constants-service'
+    import radarCategoriesService from '~/services/radar-categories-service'
     import EventList from '~/components/events-list/EventList.vue'
     export default {
         components:{
@@ -35,7 +36,11 @@
             }
         },
         computed: {
-            dateFilter(){ return this.$store.state.filters.date }
+            dateFilter(){ return this.$store.state.filters.date },
+            total(){ return this.$store.state.eventsData.total },
+            category(){ return !this.$store.state.filters.cat ? 
+                            radarCategoriesService.categoriesMap[null] : 
+                            radarCategoriesService.categoriesMap[this.$store.state.filters.cat] }
         }        
     }
 </script>

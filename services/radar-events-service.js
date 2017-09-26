@@ -1,9 +1,10 @@
 import httpService from '~/services/http-service'
+import helperService from '~/services/helper-service'
 import _ from 'lodash'
 
 const service = {
     hightlights(){
-        return httpService.get(`/api/event/highlights`).then(response=>response.Data);
+        return httpService.get(`api/event/highlights`).then(response=>response.Data);
     },
     list(filters = {}){
         let params = {
@@ -12,9 +13,15 @@ const service = {
                 pageSize: 12,                 
             }
         };
-        return httpService.get(`/api/event/list`, params);
+        return httpService.get(`api/event/list`, params);
     },
-    urlDescription: event => _.kebabCase(_.deburr(_.truncate(event.Name, { omission: '', length: 40 }))),
+    details(eventId){
+        let params = {
+            id: eventId
+        };
+        return httpService.get(`api/event/details`, params).then(response=>response.Data);
+    },
+    urlDescription: event => helperService.urlDescription(event.Name),
     getImage: (e, priority) => {
         if (!e)
             return null;

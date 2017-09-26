@@ -16,7 +16,8 @@ const createStore = () => {
         page: 0,
         total: 0,
         pageSize: 0,
-        events: []
+        events: [],
+        loading: false
       },
       filters: {
         time_s: undefined,
@@ -40,15 +41,17 @@ const createStore = () => {
       },
       load({dispatch}){
         return Promise.all([
-          dispatch('loadHightlights'),
-          dispatch('loadEvents')
+          dispatch('loadHightlights')
         ])
       },
       loadHightlights({commit}){
         return radarEventsService.hightlights().then(hightlights => commit('setHightlights', hightlights))
       },
       loadEvents({commit}){
-        return radarEventsService.list(this.state.filters).then(eventsData => commit('setEvents', eventsData))
+        commit('setEventLoading', true)
+        return radarEventsService.list(this.state.filters)
+                  .then(eventsData => commit('setEvents', eventsData))
+                  .finally(()=>commit('setEventLoading', false));
       }
     },
     mutations: {
@@ -61,11 +64,15 @@ const createStore = () => {
       setEvents(state, eventsData){
         if (eventsData && eventsData.Data)
           state.eventsData = {
+            ...state.eventsData,
             page: eventsData.Page,
             total: eventsData.Total,
             pageSize: eventsData.PageSize,
             events:  eventsData.Data
           }
+      },
+      setEventLoading(state, loading){
+        state.eventsData.loading = loading;
       }
     }
   })
