@@ -20,7 +20,7 @@
                 <h4 class="event-i-title"><i v-if="event.Highlight" class="star fa fa-star"/> {{event.Name}}</h4>
 
                 <p class="event-i-aux text-collapsed">
-                    <span v-if="event.Artists || event.Artists.length === 0">Sin artista</span>
+                    <span v-if="!event.Artists || event.Artists.length === 0">Sin artista</span>
                     <span v-for="(artist, i) in event.Artists" :key="artist.Id">
                         {{artist.Name}}
                         <span v-if="i != event.Artists.length - 1">,</span>
