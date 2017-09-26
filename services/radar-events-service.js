@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 const service = {
     hightlights(){
-        return httpService.get(`/Admin/Event/HighlightEvents`).then(response=>response.Data);
+        return httpService.get(`/api/event/highlights`).then(response=>response.Data);
     },
     list(filters = {}){
         let params = {
@@ -12,7 +12,7 @@ const service = {
                 pageSize: 12,                 
             }
         };
-        return httpService.get(`/Search/Search`, params);
+        return httpService.get(`/api/event/list`, params);
     },
     urlDescription: event => _.kebabCase(_.deburr(_.truncate(event.Name, { omission: '', length: 40 }))),
     getImage: (e, priority) => {
