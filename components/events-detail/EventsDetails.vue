@@ -22,7 +22,7 @@
                     <p class="event-d-aux">{{ dateTimeTxt }}<span v-show="event.Cover">{{ event.Cover }} {{ event.Currency.IsoCode}}</span></p>
 
                     <div class="event-r" v-if="hasReps">
-                        <!-- <show-repetition repetitions="event.Repetitions" current-date-time-local="currentDateTimeLocal"></show-repetition> -->
+                        <EventsDetailsRepetitions :repetitions="reps" :currentDateTimeLocal="repsRefDate"/>
                     </div>
 
                     <div class="event-d-txt">{{event.Resume}}</div>
@@ -125,14 +125,17 @@
 
 <script>
     import DivImage from '~/components/common/image/DivImage.vue'
+    import EventsDetailsRepetitions from '~/components/events-detail/EventsDetailsRepetitions.vue'
     import dateService from '~/services/date-service'
     import helperService from '~/services/helper-service'
+    import seoService from '~/services/seo-service'
+    import imagesService from '~/services/images-service'
     import _ from 'lodash'
     import moment from 'moment'
 
     export default {
         components:{
-            DivImage
+            DivImage, EventsDetailsRepetitions
         },
         data(){
             return {                
@@ -140,6 +143,39 @@
             }
         },
         props:["event"],
+        head(){
+            let meta = []
+            let desc = ""
+            let artistStr = ""
+            if (this.event){
+                let strItems = [];
+                if (this.dateTimeTxt)
+                    strItems.push(this.dateTimeTxt)
+                if (this.event.Resume)
+                    strItems.push(this.event.Resume)
+                if (this.place)
+                    strItems.push(this.place.Name)
+                if (!_.isEmpty(this.artists)){
+                    artistStr = helperService.joinStr(_.map(this.artists, art=>art.Name))
+                    strItems.push(artistStr)
+                }
+                desc = helperService.joinStr(strItems, ' - ')
+            }
+            if (desc)
+                meta.push({ hid: 'description', id:"mDescription", name: 'description', content: desc })
+            if (this.firstImageKey){
+                let imgUrl = imagesService.imageUrl(this.firstImageKey)
+                meta.push({ hid: 'faImage', id: 'faImage', property: 'og:image', content: imgUrl })
+            } 
+            if (this.event && this.event.Name){
+                meta.push({ hid: 'faTitle', id: 'faTitle', property: 'og:title', content: this.event.Name })
+            }
+            meta.push({ hid: 'faUrl', id: 'faUrl', property: 'og:url', content: `${process.env.apiUrl}${this.$route.path}`  })
+            return {
+                title: this.event && this.event.Name ? `Radar - ${this.event.Name}` : seoService.DEFAULT_TITLE,
+                meta
+            }
+        },
         methods:{
             selectArtist(artist){
                 if (this.artists && this.artists.length == 1) 
@@ -211,6 +247,16 @@
             },
             selectedArtistImageSourceType(){
                 return _.get(this.selectedCalc, "Image.SourceType")
+            },
+            firstImageKey(){
+                if (this.imageKey)
+                    return this.imageKey;
+                if (!_.isEmpty(this.artists)){
+                    let artistImage = _(this.artists).filter(a=>a.Image && a.Image.Key).head()
+                    if (artistImage)
+                        return artistImage.Image.Key
+                }
+                return this.placeImageKey
             }
         }                   
     }

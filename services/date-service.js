@@ -4,6 +4,7 @@ const service = {
     formats: {
         SERVER_DATE: "YYYYMMDDHHmm",
         EVENT_DISPLAY_DATE_TIME: "dddd, Do MMMM | hh:mm a",
+        EVENT_DISPLAY_DATE_FULL: "dddd, D MMM YYYY",
         SHORT_WEEKDAY_DATE: "ddd D"
     },
 

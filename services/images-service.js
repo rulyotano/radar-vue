@@ -1,4 +1,5 @@
 import localImageSource from '~/services/images-sources/local-image-source';
+import _ from 'lodash'
 
 const sources = [localImageSource];
 const defaultSource = localImageSource;
@@ -14,7 +15,7 @@ const service = {
         if (!selectedSource)
             selectedSource = defaultSource;
         if (!version)
-            version = Object.keys(selectedSource.Versions).last();
+            version = _(selectedSource.Versions).keys().last();
         return selectedSource.GetImageUrl(key, version);
     },
     uploadImage: function($flow) {
