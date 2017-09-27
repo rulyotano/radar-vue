@@ -19,6 +19,9 @@ const createStore = () => {
         events: [],
         loading: false
       },
+      eventDetailsData: {
+        event: null
+      },
       filters: {
         time_s: undefined,
         time_e: undefined,
@@ -52,6 +55,11 @@ const createStore = () => {
         return radarEventsService.list(this.state.filters)
                   .then(eventsData => commit('setEvents', eventsData))
                   .finally(()=>commit('setEventLoading', false));
+      },
+      loadEventDetails({commit}, eventId){
+        commit('setEventDetails', null)
+        radarEventsService.details(eventId)
+                  .then(event=> commit('setEventDetails', event))
       }
     },
     mutations: {
@@ -73,6 +81,9 @@ const createStore = () => {
       },
       setEventLoading(state, loading){
         state.eventsData.loading = loading;
+      },
+      setEventDetails(state, event){
+        state.eventDetailsData.event = event;
       }
     }
   })

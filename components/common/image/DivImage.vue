@@ -1,8 +1,7 @@
 <template >
-    <div v-if="imageKey" :style="{'background-image': 'url('+imageUrl+')'}">
+    <div :style="imgStyle">
         <slot></slot>
     </div>
-    <div v-else><slot></slot></div>
 </template>
 
 <script>
@@ -10,7 +9,15 @@
     export default {
         mixins:[
             imageMixin
-        ]
+        ],
+        computed:{
+            imgStyle(){
+                let style = {}
+                if (this.imageUrl)
+                    style['background-image'] =  'url('+this.imageUrl+')'
+                return style
+            }
+        }
     }
 </script>
 

@@ -1,6 +1,5 @@
 <template >
-    <img v-if="imageKey" :src="imageUrl"/>
-    <img v-else/>
+    <img :src="imageUrl"/>
 </template>
 
 <script>

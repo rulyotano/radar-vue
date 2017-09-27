@@ -9,9 +9,8 @@
                     <span class="event-cancel" v-if="event.Status == 1">CANCELADO</span>
                 </div>
 
-                <DivImage class="media-i b-cut" :class="{'no-img no-img-e small' : !event.Image.Key}"
-                     :imageKey="event.Image.Key" imageVersion="small">
-                </DivImage>
+                <DivImage class="media-i b-cut" :class="{'no-img no-img-e small' : !imageKey}"
+                     :imageKey="imageKey" imageVersion="small"/>
 
                 <div class="event-d-info">
                     <!-- <a class="edit-link" title="Editar evento" target="_self" ng-if="userInfo.Admin || userInfo.Id == event.Creator.Id" ng-href="/admin/#/event/edit/{{event.Id}}">(editar)</a> -->
@@ -23,7 +22,7 @@
                     <p class="event-d-aux">{{ dateTimeTxt }}<span v-show="event.Cover">{{ event.Cover }} {{ event.Currency.IsoCode}}</span></p>
 
                     <div class="event-r" v-if="hasReps">
-                        <show-repetition repetitions="event.Repetitions" current-date-time-local="currentDateTimeLocal"></show-repetition>
+                        <!-- <show-repetition repetitions="event.Repetitions" current-date-time-local="currentDateTimeLocal"></show-repetition> -->
                     </div>
 
                     <div class="event-d-txt">{{event.Resume}}</div>
@@ -58,15 +57,13 @@
                     </div>-->
                 </div> 
 
-                <DivImage class="event-d-img" :class="{'no-img no-img-e' : !event.Image.Key}"
-                     :imageKey="event.Image.Key"
-                     imageVersion="medium" :imageSource="event.Image.SourceType">
-                </DivImage>
+                <DivImage class="event-d-img" :class="{'no-img no-img-e' : !imageKey}"
+                     :imageKey="imageKey" imageVersion="medium"/>
             </div>
 
             <div class="item-d">
-                <DivImage class="item-d-img" :imageKey="place.Image.Key" :class="{'no-img no-img-p' : !place.Image.Key}"
-                     imageVersion="small" :imageSource="place.Image.SourceType">
+                <DivImage class="item-d-img" :imageKey="placeImageKey" :class="{'no-img no-img-p' : !placeImageKey}"
+                     imageVersion="small" :imageSource="placeImageSourceType">
                 </DivImage>
 
                 <div class="item-d-info">
@@ -85,31 +82,31 @@
                                 <span v-show="place.Country">, {{place.Country.Name}}</span>
                             </div>
 
-                            <p class="contact-line">
+                            <p class="contact-line" v-if="place && place.ContactInfo">
                                 <a class="contact-email" v-if="place.ContactInfo.Email" :href="'mailto:'+place.ContactInfo.Email+'?Subject=Radar!'" target="_blank">{{place.ContactInfo.Email}}</a>
                                 <span class="contact-phone" v-if="place.ContactInfo.Phone1">{{place.ContactInfo.Phone1}}</span>
                                 <a class="contact-email" v-if="place.ContactInfo.PageUrl" :href="place.ContactInfo.PageUrl" target="_blank">{{place.ContactInfo.PageUrl}}</a>
                             </p>
                         </div>
-                        <div class="col-sm-10 col-sm-offset-2" v-show="artists && artists.length">
+                        <div class="col-sm-10 col-sm-offset-2" v-if="artists && artists.length">
                             <p class="item-d-aux item-d-a">
                                 <span class="item-d-title">Artista</span>
                                 <a v-for="art in artists" :key="art.Id" @click="selectArtist(art)">
-                                    <strong v-if="art.Id === selected.Id">{{art.Name}}</strong>
-                                    <span v-if="art.Id !== selected.Id">{{art.Name}}</span>
+                                    <strong v-if="art.Id === selectedCalc.Id">{{art.Name}}</strong>
+                                    <span v-if="art.Id !== selectedCalc.Id">{{art.Name}}</span>
                                 </a>
                             </p>
                         </div>
                     </div>
 
-                    <DivImage v-show="artists && artists.length" class="item-d-img right"
-                         :imageKey="selected && selected.Image ? selected.Image.Key : null"
-                         :class="{'no-img no-img-a' : !selected || !selected.Image || !selected.Image.Key }"
+                    <DivImage v-if="artists && artists.length" class="item-d-img right"
+                         :imageKey="selectedArtistImageKey"
+                         :class="{'no-img no-img-a' : !selectedArtistImageKey }"
                          imageVersion="small" 
-                         :imageSource="selected && selected.Image ? selected.Image.SourceType : null">
+                         :imageSource="selectedArtistImageSourceType">
 
                         <div class="art-detail">
-                            <nuxt-link :to="'/artist/' + selectedArtistSlug + '/' + selected.Id">ver detalles</nuxt-link>
+                            <nuxt-link :to="'/artist/' + selectedArtistSlug + '/' + selectedCalc.Id">ver detalles</nuxt-link>
                             <!-- <a target="_self" ng-if="userInfo.Admin || userInfo.Id == selected.Creator.Id" href="/admin/#/artist/edit/{{selected.Id}}">editar</a> -->
                         </div>
 
@@ -134,7 +131,7 @@
     import moment from 'moment'
 
     export default {
-        comments:{
+        components:{
             DivImage
         },
         data(){
@@ -145,12 +142,16 @@
         props:["event"],
         methods:{
             selectArtist(artist){
-                if (this.artists && this.artists.length == 1) {
-                    this.$router.push({ path: '/artist/' + helperService.urlDescription(artist.Name) + '/' + artist.Id })
-                }
+                if (this.artists && this.artists.length == 1) 
+                    this.$router.push({ path: '/artist/' + helperService.urlDescription(artist.Name) + '/' + artist.Id })                
                 else
                     this.selected = artist;
-                }
+            }
+        },
+        watch:{
+            event(newEvent){
+                this.selected = null;
+            }
         },
         computed:{
             reps(){
@@ -162,7 +163,7 @@
                         DateTimeUtc: moment(r.DateTimeUtc) 
                     })).value()                
             },
-            hasReps(){ return reps.length > 1 },
+            hasReps(){ return this.reps.length > 1 },
             activeDate(){
                 if (!this.reps.length)
                     return {
@@ -184,8 +185,32 @@
             artists(){
                 return this.event.Artists
             },
+            selectedCalc(){
+                return this.selected || _.head(this.artists)
+            },
             selectedArtistSlug(){
-                return this.selected ? helperService.urlDescription(this.selected.Name) : ""
+                return this.selectedCalc ? helperService.urlDescription(this.selectedCalc.Name) : ""
+            },
+            imageKey(){
+                return _.get(this.event, "Image.Key") || ""
+            },
+            imageSourceType(){
+                return _.get(this.event, "Image.SourceType")  || ""
+            },
+            placeImageKey(){
+                return _.get(this.place, "Image.Key")
+            },
+            placeImageSourceType(){
+                return _.get(this.place, "Image.SourceType")
+            },
+            imageSourceType(){
+                return _.get(this.event, "Image.SourceType")
+            },
+            selectedArtistImageKey(){
+                return _.get(this.selectedCalc, "Image.Key")
+            },
+            selectedArtistImageSourceType(){
+                return _.get(this.selectedCalc, "Image.SourceType")
             }
         }                   
     }

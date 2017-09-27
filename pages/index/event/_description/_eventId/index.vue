@@ -15,14 +15,15 @@
         },
         data: function () {
             return { 
-                eventId: this.$route.params.eventId,
-                event: null                
+                eventId: this.$route.params.eventId
             }
         },
+        computed:{
+            event(){ return this.$store.state.eventDetailsData.event }
+        },
         fetch({store, params}){
-            let self = this;
             return radarEventsService.details(params.eventId)
-                .then(event=>self.event = event)
+                .then(event=>store.commit("setEventDetails", event))
         }
     }
 </script>
