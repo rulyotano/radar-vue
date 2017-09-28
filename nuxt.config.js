@@ -19,9 +19,11 @@ module.exports = {
       { name: 'robots', content: 'NOODP' },
 
       { property: 'fb:app_id', content: '535946089926668' },
+      { hid: 'faType', id: 'faType',property: "og:type", content: "website" },
       { hid: 'faImage', id: 'faImage', property: 'og:image', content: 'http://www.enelradar.com/Content/img/logo-fb.jpg' },
       { hid: 'faUrl', id: 'faUrl', property: 'og:url', content: 'http://www.enelradar.com' },
       { hid: 'faTitle', id: 'faTitle', property: 'og:title', content: 'Radar - Guía de eventos en Cuba' },
+      { hid: 'faDescription', id: 'faDescription', property: 'og:description', content: 'Cartelera de fiestas, conciertos, obras de tetro, cine y otros eventos sociales en Cuba' },
     ],
     link: [
       { rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico' },

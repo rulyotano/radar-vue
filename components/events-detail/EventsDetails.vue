@@ -161,8 +161,10 @@
                 }
                 desc = helperService.joinStr(strItems, ' - ')
             }
-            if (desc)
+            if (desc){
                 meta.push({ hid: 'description', id:"mDescription", name: 'description', content: desc })
+                meta.push({ hid: 'faDescription', id: 'faDescription', property: 'og:description', content: desc })
+            }
             if (this.firstImageKey){
                 let imgUrl = imagesService.imageUrl(this.firstImageKey)
                 meta.push({ hid: 'faImage', id: 'faImage', property: 'og:image', content: imgUrl })
