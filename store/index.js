@@ -25,6 +25,9 @@ const createStore = () => {
       artistDetailsData: {
         artist: null
       },
+      placeDetailsData: {
+        place: null
+      },
       filters: {
         time_s: undefined,
         time_e: undefined,
@@ -90,6 +93,9 @@ const createStore = () => {
       },
       setArtistDetails(state, artist){
         state.artistDetailsData.artist = artist;
+      },
+      setPlaceDetails(state, place){
+        state.placeDetailsData.place = place;
       }
     }
   })

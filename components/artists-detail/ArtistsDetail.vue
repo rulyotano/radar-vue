@@ -41,10 +41,31 @@
 
 <script>
     import DivImage from '~/components/common/image/DivImage.vue'
+    import imagesService from '~/services/images-service'
     import _ from 'lodash'
     export default {
         components:{ DivImage },
         props:["artist"],
+        head(){
+            let meta = []
+            let desc = ""
+            if (desc){
+                meta.push({ hid: 'description', id:"mDescription", name: 'description', content: desc })
+                meta.push({ hid: 'faDescription', id: 'faDescription', property: 'og:description', content: desc })
+            }
+            if (this.artistImageKey){
+                let imgUrl = imagesService.imageUrl(this.artistImageKey)
+                meta.push({ hid: 'faImage', id: 'faImage', property: 'og:image', content: imgUrl })
+            }
+            if (this.artist && this.artist.Name){
+                meta.push({ hid: 'faTitle', id: 'faTitle', property: 'og:title', content: this.artist.Name })
+            }
+
+            return {
+                title: this.artist && this.artist.Name ? `Radar - ${this.artist.Name}` : seoService.DEFAULT_TITLE,
+                meta
+            }
+        },
         computed:{
             artistImageKey(){
                 return _.get(this.artist, "Image.Key")                    
@@ -52,7 +73,7 @@
         },
         methods:{
             share(){
-                console.log("shage")
+                console.log("share")
             }
         }
     }
