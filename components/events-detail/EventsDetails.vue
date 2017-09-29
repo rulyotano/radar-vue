@@ -77,9 +77,9 @@
 
                             <div class="item-d-txt">
                                 {{place.Address}}
-                                <span v-show="place.Municipality">, {{place.Municipality.Name}}</span>
-                                <span v-show="place.State">, {{place.State.Name}}</span>
-                                <span v-show="place.Country">, {{place.Country.Name}}</span>
+                                <span v-if="place.Municipality">, {{place.Municipality.Name}}</span>
+                                <span v-if="place.State">, {{place.State.Name}}</span>
+                                <span v-if="place.Country">, {{place.Country.Name}}</span>
                             </div>
 
                             <p class="contact-line" v-if="place && place.ContactInfo">

@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     apiUrl: 'http://www.enelradar.com',
+    adminUrl: 'http://www.enelradar.com',
     imagesPath: "Content/StoredImages"
   },
   /*
