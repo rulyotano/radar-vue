@@ -49,6 +49,8 @@
         head(){
             let meta = []
             let desc = ""
+            if (this.artist && this.artist.Content)
+                desc = _.truncate(this.artist.Content, { 'length': 160, })
             if (desc){
                 meta.push({ hid: 'description', id:"mDescription", name: 'description', content: desc })
                 meta.push({ hid: 'faDescription', id: 'faDescription', property: 'og:description', content: desc })
