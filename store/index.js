@@ -22,6 +22,9 @@ const createStore = () => {
       eventDetailsData: {
         event: null
       },
+      artistDetailsData: {
+        artist: null
+      },
       filters: {
         time_s: undefined,
         time_e: undefined,
@@ -84,6 +87,9 @@ const createStore = () => {
       },
       setEventDetails(state, event){
         state.eventDetailsData.event = event;
+      },
+      setArtistDetails(state, artist){
+        state.artistDetailsData.artist = artist;
       }
     }
   })

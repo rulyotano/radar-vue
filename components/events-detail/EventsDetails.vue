@@ -25,7 +25,7 @@
                         <EventsDetailsRepetitions :repetitions="reps" :currentDateTimeLocal="repsRefDate"/>
                     </div>
 
-                    <div class="event-d-txt">{{event.Resume}}</div>
+                    <div class="event-d-txt" v-html="event.Resume"/>
 
                     <!-- <div class="event-i-f">
                         <div class="event-i-f-ctr" uib-dropdown>

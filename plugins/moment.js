@@ -1,4 +1,4 @@
 import moment from 'moment'
 
 moment.locale('es')
-console.log(moment.locale())
+// console.log(moment.locale())
