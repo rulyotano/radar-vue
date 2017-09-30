@@ -30,10 +30,10 @@
                 
                 <!-- <a target="_self" class="edit-link" href="/Account/Login?ReturnUrl=%2Fadmin%2F%23%2Fcrear-evento?place={{::place.Id}}">(agregar evento)</a> -->
                 
-                <!-- <span class="stb-s-lb-r">{{filterOption.total}} Resultados </span> -->
+                <span v-if="totalEvents" class="stb-s-lb-r">{{totalEvents}} Resultados </span>
             </h2>
 
-            <!-- <event-list events="events" events-refresh="refresh()" events-loading="loading" events-add="/Account/Login?ReturnUrl=%2Fadmin%2F%23%2Fcrear-evento?place={{::place.Id}}"></event-list> -->          
+            <EventsListAsset :events="events" :placeId="place.Id"/>
 
         </div>
 
@@ -48,10 +48,11 @@
 <script>
     import DivImage from '~/components/common/image/DivImage.vue'
     import radarPlaceService from '~/services/radar-place-service'
+    import EventsListAsset from '~/components/events-list/EventsListAsset.vue'
     import imagesService from '~/services/images-service'
     import _ from 'lodash'
     export default {
-        components:{ DivImage },
+        components:{ DivImage, EventsListAsset },
         props:["place"], 
         head(){
             let meta = []
@@ -90,6 +91,15 @@
             },
             fullAddress(){
                 return this.place ? radarPlaceService.getFullAddress(this.place) : ""
+            },
+            events(){
+                let events = _.get(this.place, "Events")
+                if (_.isEmpty(events))
+                    return []
+                return events
+            },
+            totalEvents(){
+                return _.get(this.place, "TotalEvents")
             }
         },
         methods:{

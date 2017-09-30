@@ -24,10 +24,10 @@
                 
                 <!-- <a target="_self" class="edit-link" href="/Account/Login?ReturnUrl=%2Fadmin%2F%23%2Fcrear-evento?artist={{::artist.Id}}">(agregar evento)</a> -->
                 
-                <!-- <span class="stb-s-lb-r">{{filterOption.total}} Resultados </span> -->
+                <span v-if="totalEvents" class="stb-s-lb-r">{{totalEvents}} Resultados </span>
             </h2>
 
-            <!-- <event-list events="events" events-refresh="refresh()" events-loading="loading" events-add="/Account/Login?ReturnUrl=%2Fadmin%2F%23%2Fcrear-evento?artist={{::artist.Id}}"></event-list> -->          
+            <EventsListAsset :events="events" :artistId="artist.Id"/>
 
         </div>
 
@@ -41,10 +41,11 @@
 
 <script>
     import DivImage from '~/components/common/image/DivImage.vue'
+    import EventsListAsset from '~/components/events-list/EventsListAsset.vue'
     import imagesService from '~/services/images-service'
     import _ from 'lodash'
     export default {
-        components:{ DivImage },
+        components:{ DivImage, EventsListAsset },
         props:["artist"],
         head(){
             let meta = []
@@ -71,6 +72,15 @@
         computed:{
             artistImageKey(){
                 return _.get(this.artist, "Image.Key")                    
+            },
+            events(){
+                let events = _.get(this.artist, "Events")
+                if (_.isEmpty(events))
+                    return []
+                return events
+            },
+            totalEvents(){
+                return _.get(this.artist, "TotalEvents")
             }
         },
         methods:{

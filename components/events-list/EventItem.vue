@@ -59,7 +59,7 @@
 
     export default {
         components: {DivImage},
-        props: ['event'],
+        props: ['event', 'imagePriority'],
         data(){
             return {
                 shareDropdownOpen: false
@@ -67,7 +67,7 @@
         },
         computed: {
             date(){ return dateService.fromServerDate(this.event.DateTime).format(dateService.formats.EVENT_DISPLAY_DATE_TIME) },
-            displayImage() { return _.get(radarEventsService.getImage(this.event), 'Key') },
+            displayImage() { return _.get(radarEventsService.getImage(this.event, this.imagePriority), 'Key') },
             urlDescription() { return radarEventsService.urlDescription(this.event) },
             coverStr() { return this.event.Cover ? ` | ${this.event.Cover} ${this.event.Currency.IsoCode}` : '' }
         }        
