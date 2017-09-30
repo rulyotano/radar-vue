@@ -33,7 +33,7 @@
                 <span v-if="totalEvents" class="stb-s-lb-r">{{totalEvents}} Resultados </span>
             </h2>
 
-            <EventsListAsset :events="events" :placeId="place.Id"/>
+            <EventList :events="events" :placeId="place.Id" :eventsAdd="true"/>
 
         </div>
 
@@ -48,11 +48,11 @@
 <script>
     import DivImage from '~/components/common/image/DivImage.vue'
     import radarPlaceService from '~/services/radar-place-service'
-    import EventsListAsset from '~/components/events-list/EventsListAsset.vue'
+    import EventList from '~/components/events-list/EventList.vue'
     import imagesService from '~/services/images-service'
     import _ from 'lodash'
     export default {
-        components:{ DivImage, EventsListAsset },
+        components:{ DivImage, EventList },
         props:["place"], 
         head(){
             let meta = []

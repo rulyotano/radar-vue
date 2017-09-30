@@ -10,7 +10,7 @@ const service = {
         let params = {
             model: {
                 page: filters.page || 0,
-                pageSize: 12,                 
+                pageSize: filters.pageSize || 12,                 
             }
         };
         return httpService.get(`api/event/list`, params);

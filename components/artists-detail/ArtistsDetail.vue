@@ -27,7 +27,7 @@
                 <span v-if="totalEvents" class="stb-s-lb-r">{{totalEvents}} Resultados </span>
             </h2>
 
-            <EventsListAsset :events="events" :artistId="artist.Id"/>
+            <EventList :events="events" :artistId="artist.Id" :eventsAdd="true"/>
 
         </div>
 
@@ -41,11 +41,11 @@
 
 <script>
     import DivImage from '~/components/common/image/DivImage.vue'
-    import EventsListAsset from '~/components/events-list/EventsListAsset.vue'
+    import EventList from '~/components/events-list/EventList.vue'
     import imagesService from '~/services/images-service'
     import _ from 'lodash'
     export default {
-        components:{ DivImage, EventsListAsset },
+        components:{ DivImage, EventList },
         props:["artist"],
         head(){
             let meta = []

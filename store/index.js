@@ -15,9 +15,10 @@ const createStore = () => {
       eventsData: {
         page: 0,
         total: 0,
-        pageSize: 0,
+        lastPage: false,
         events: [],
-        loading: false
+        loading: false,
+        loadingMore: false
       },
       eventDetailsData: {
         event: null
@@ -36,8 +37,7 @@ const createStore = () => {
         date: undefined,
         loc: undefined,
         q: undefined,
-        cat: undefined,
-        page: undefined
+        cat: undefined
       }
     },
     getters: {
@@ -57,10 +57,23 @@ const createStore = () => {
         return radarEventsService.hightlights().then(hightlights => commit('setHightlights', hightlights))
       },
       loadEvents({commit}){
-        commit('setEventLoading', true)
-        return radarEventsService.list(this.state.filters)
+        commit('setEventLoading', true)        
+        let filters = this.state.filters
+        filters.page = 0
+        return radarEventsService.list(filters)
                   .then(eventsData => commit('setEvents', eventsData))
                   .finally(()=>commit('setEventLoading', false));
+      },
+      loadMoreEvents({commit}){
+        commit('setEventLoadingMore', true)
+        let filters = this.state.filters
+        filters.page = this.state.eventsData.page + 1
+        
+        return radarEventsService.list(this.state.filters)
+                  .then(moreEventsData => commit('setMoreEvents', moreEventsData))
+                  .finally(()=>commit('setEventLoadingMore', false));
+
+        return radarEventsService.list()
       },
       loadEventDetails({commit}, eventId){
         commit('setEventDetails', null)
@@ -79,14 +92,27 @@ const createStore = () => {
         if (eventsData && eventsData.Data)
           state.eventsData = {
             ...state.eventsData,
+            lastPage: eventsData.LastPage,
             page: eventsData.Page,
             total: eventsData.Total,
-            pageSize: eventsData.PageSize,
-            events:  eventsData.Data
+            events: eventsData.Data
+          }
+      },
+      setMoreEvents(state, moreEventsData){
+        if (moreEventsData && moreEventsData.Data)
+          state.eventsData = {
+            ...state.eventsData,
+            lastPage: moreEventsData.LastPage,
+            page: moreEventsData.Page,
+            total: moreEventsData.Total,
+            events: [...state.eventsData.events, ...moreEventsData.Data] 
           }
       },
       setEventLoading(state, loading){
-        state.eventsData.loading = loading;
+        state.eventsData.loading = loading;      
+      },
+      setEventLoadingMore(state, loading){
+        state.eventsData.loadingMore = loading;
       },
       setEventDetails(state, event){
         state.eventDetailsData.event = event;

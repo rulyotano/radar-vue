@@ -17,7 +17,9 @@
 
         <h1 class="stn-lb">{{category.displayEvents}}<span class="stb-lb-r">{{ total + ' Resultados'}} </span></h1>
 
-        <EventList/>
+        <EventList :events="events" :loading="loading"/>
+
+        <button class="btn-m btn-primary btn-block add-button" v-if="hasMoreEvents" @click="loadMoreEvents()">Ver Más</button>
     </div>
 </template>
 
@@ -31,8 +33,7 @@
         },
         data(){
             return {
-                dateOptions: searchConstants.dateOptions,
-                loading: false
+                dateOptions: searchConstants.dateOptions
             }
         },
         computed: {
@@ -40,11 +41,26 @@
             total(){ return this.$store.state.eventsData.total },
             category(){ return !this.$store.state.filters.cat ? 
                             radarCategoriesService.categoriesMap[null] : 
-                            radarCategoriesService.categoriesMap[this.$store.state.filters.cat] }
+                            radarCategoriesService.categoriesMap[this.$store.state.filters.cat] },
+            hasMoreEvents(){ return !this.$store.state.eventsData.lastPage },            
+            loading(){ return this.$store.state.eventsData.loading },            
+            events() { return this.$store.state.eventsData.events } 
+        },
+        methods:{
+            loadMoreEvents(){
+                this.$store.dispatch("loadMoreEvents")
+            }
         }        
     }
 </script>
 
 <style scoped>
+.add-button{
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 20px;
+}
 
 </style>

@@ -1,23 +1,25 @@
 <template>
-    <div v-if="!loading" class="row s-row">
-        <EventItem v-for="item in events" :key="item.key" :event="item"/>
+    <div class="row s-row" v-if="!loading">
+        <EventItem :event="event" v-for="event in events" :key="event.Id" :imagePriority="imagePriority"/>
+        <div class="col-md-3 col-sm-4" v-if="eventsAdd">
+            <a class="event-i-add" target="_blank" :href="createEventUrl" title="Crear evento"><i class="fa fa-plus"></i></a>
+        </div>
     </div>
 </template>
 
 <script>
-    import EventItem from "~/components/events-list/EventItem.vue"
-    
+    import EventItem from '~/components/events-list/EventItem.vue'
+    import httpService from '~/services/http-service'
     export default {
-        components:{
-            EventItem
-        },
-        data(){
-            return {
-                loading: false
-            }
-        },
+        components: { EventItem },
+        props: ["events", "artistId", "placeId", "eventsAdd", "loading"],
         computed:{
-            events() { return this.$store.state.eventsData.events } 
+            createEventUrl(){
+                return httpService.createEventUrl(this.artistId, this.placeId)
+            },
+            imagePriority(){
+                return this.artistId ? 'place' : this.placeId ? 'artist' : null;
+            }
         }        
     }
 </script>

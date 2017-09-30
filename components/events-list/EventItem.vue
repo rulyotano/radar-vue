@@ -4,7 +4,7 @@
                 :to="'/event/'+ urlDescription + '/'+event.Id">
             <i class="verify abs fa fa-check" title="Verificado" v-if="event.Verified"/>
 
-            <DivImage class="media-i b-cut" :class="{'no-img no-img-e':displayImage}"
+            <DivImage class="media-i b-cut" :class="{'no-img no-img-e':!displayImage}"
                     :imageKey="displayImage"
                     imageVersion="small">
                 <div class="media-hover">
