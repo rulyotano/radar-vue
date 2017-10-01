@@ -3,6 +3,7 @@ import moment from 'moment'
 const service = {
     formats: {
         SERVER_DATE: "YYYYMMDDHHmm",
+        SERVER_DATE_ONLY_DATE: "YYYYMMDD",
         EVENT_DISPLAY_DATE_TIME: "dddd, Do MMMM | hh:mm a",
         EVENT_DISPLAY_DATE_FULL: "dddd, D MMM YYYY",
         SHORT_WEEKDAY_DATE: "ddd D"
