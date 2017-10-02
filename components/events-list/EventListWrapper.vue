@@ -19,7 +19,7 @@
 
         <EventList :events="events" :loading="loading"/>
 
-        <button class="btn-m btn-primary btn-block add-button" v-if="hasMoreEvents" @click="loadMoreEvents()">Ver Más</button>
+        <button class="btn-m btn-primary btn-block add-button" v-if="hasMoreEvents" @click="loadMoreEvents()">Ver Más</button>        
     </div>
 </template>
 
@@ -62,5 +62,7 @@
     display: block;
     margin-bottom: 20px;
 }
+
+
 
 </style>

@@ -12,6 +12,7 @@
               <SideBar/>
             </div>
         </div>
+        <GoTopButton/>
     </div>
     
     <SiteFooter/>
@@ -23,11 +24,13 @@
 import SiteHeader from '~/components/header/SiteHeader.vue'
 import SiteFooter from '~/components/SiteFooter.vue'
 import SideBar from '~/components/sidebar/SideBar.vue'
+import GoTopButton from '~/components/common/GoTopButton.vue'
 
 export default {
   components: {
     SiteHeader,
     SiteFooter,
+    GoTopButton,
     SideBar
   }
 }
