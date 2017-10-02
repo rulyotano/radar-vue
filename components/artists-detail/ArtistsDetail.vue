@@ -43,6 +43,7 @@
     import DivImage from '~/components/common/image/DivImage.vue'
     import EventList from '~/components/events-list/EventList.vue'
     import imagesService from '~/services/images-service'
+    import seoService from '~/services/seo-service'
     import _ from 'lodash'
     export default {
         components:{ DivImage, EventList },

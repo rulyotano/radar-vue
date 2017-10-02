@@ -7,22 +7,20 @@
 <script>
     import EventsDetails from '~/components/events-detail/EventsDetails.vue'
     import radarEventsService from '~/services/radar-events-service'
+    import helperService from '~/services/helper-service'
     export default {
         components: {EventsDetails},
         validate ({ params }) {
+            let validParams = helperService.validateParamsGuid(params.eventId, params.description)
             // Must be a number
-            return !!params.eventId
-        },
-        data: function () {
-            return { 
-                eventId: this.$route.params.eventId
-            }
-        },
+            return !!validParams.id
+        },        
         computed:{
             event(){ return this.$store.state.eventDetailsData.event }
         },
         fetch({store, params}){
-            return radarEventsService.details(params.eventId)
+            let validParams = helperService.validateParamsGuid(params.eventId, params.description)
+            return radarEventsService.details(validParams.id)
                 .then(event=>store.commit("setEventDetails", event))
         }
     }
