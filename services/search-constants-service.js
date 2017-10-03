@@ -2,57 +2,65 @@
  * Created by Raul on 6/1/2017.
  */
 
-import moment from 'moment';
-import dateService from '~/services/date-service.js';
+import moment from 'moment'
+import dateService from '~/services/date-service.js'
 
 const shortWeekDateFormat = dateService.formats.SHORT_WEEKDAY_DATE;
 
-const dOptions = [{
-        name: 'Todos',
-        selectText: 'Fecha'
-    }, {
-        name: 'Hoy',
-        selectText: 'Hoy',
-        end: moment().endOf("day")
-    }, {
-        name: 'Mañana',
-        selectText: 'Mañana',
-        begin: moment().add(1, 'd').startOf("day"),
-        end: moment().add(1, 'd').endOf("day")
-    }, {
-        name: moment().add(2, 'd').format(shortWeekDateFormat),
-        selectText: moment().add(2, 'd').format(shortWeekDateFormat),
-        begin: moment().add(2, 'd').startOf("day"),
-        end: moment().add(2, 'd').endOf("day")
-    }, {
-        name: moment().add(3, 'd').format(shortWeekDateFormat),
-        selectText: moment().add(3, 'd').format(shortWeekDateFormat),
-        begin: moment().add(3, 'd').startOf("day"),
-        end: moment().add(3, 'd').endOf("day")
-    }, {
-        name: moment().add(4, 'd').format(shortWeekDateFormat),
-        selectText: moment().add(4, 'd').format(shortWeekDateFormat),
-        begin: moment().add(4, 'd').startOf("day"),
-        end: moment().add(4, 'd').endOf("day")
-    }, {
-        name: 'Este Fin',
-        selectText: 'Este Fin',
-        begin: moment().day(6).startOf("day"),
-        end: moment().day(7).endOf("day")
-    }, {
-        name: 'Esta Semana',
-        selectText: 'Esta Semana',
-        end: moment().day(7).endOf("day")
+const dOptionsFn = () =>{
+    const dOptions = [{
+            name: 'Todos',
+            selectText: 'Fecha'
+        }, {
+            name: 'Hoy',
+            selectText: 'Hoy',
+            end: moment().endOf("day")
+        }, {
+            name: 'Mañana',
+            selectText: 'Mañana',
+            begin: moment().add(1, 'd').startOf("day"),
+            end: moment().add(1, 'd').endOf("day")
+        }, {
+            name: moment().add(2, 'd').format(shortWeekDateFormat),
+            selectText: moment().add(2, 'd').format(shortWeekDateFormat),
+            begin: moment().add(2, 'd').startOf("day"),
+            end: moment().add(2, 'd').endOf("day")
+        }, {
+            name: moment().add(3, 'd').format(shortWeekDateFormat),
+            selectText: moment().add(3, 'd').format(shortWeekDateFormat),
+            begin: moment().add(3, 'd').startOf("day"),
+            end: moment().add(3, 'd').endOf("day")
+        }, {
+            name: moment().add(4, 'd').format(shortWeekDateFormat),
+            selectText: moment().add(4, 'd').format(shortWeekDateFormat),
+            begin: moment().add(4, 'd').startOf("day"),
+            end: moment().add(4, 'd').endOf("day")
+        }, {
+            name: 'Este Fin',
+            selectText: 'Este Fin',
+            begin: moment().day(6).startOf("day"),
+            end: moment().day(7).endOf("day")
+        }, {
+            name: 'Esta Semana',
+            selectText: 'Esta Semana',
+            end: moment().day(7).endOf("day")
+        }
+    ];
+    
+    for (let key = 1; key < dOptions.length; key++) {
+        dOptions[key].key = key;
     }
-];
+    return dOptions
+} 
 
-for (let key = 1; key < dOptions.length; key++) {
-    dOptions[key].key = key;
-}
-
+let dOptions = null;
 
 const service = {
-    dateOptions: dOptions,
+    dateOptions(){
+        if (!dOptions)
+            dOptions = dOptionsFn()
+        return dOptions
+    },
 
     coverOptions: [
         {
@@ -104,9 +112,10 @@ const service = {
     ],
 
     getDateOption(index) {
-        if (index == null || index > service.dateOptions.length - 1)
-            return service.dateOptions[0];
-        return service.dateOptions[index];
+        let dateOptions = service.dateOptions()
+        if (index == null || index > dateOptions.length - 1)
+            return dateOptions[0];
+        return dateOptions[index];
     },
 
     getTimeOption(time) {

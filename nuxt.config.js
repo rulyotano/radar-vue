@@ -2,7 +2,8 @@ module.exports = {
   env: {
     apiUrl: 'http://www.enelradar.com',
     adminUrl: 'http://www.enelradar.com',
-    imagesPath: "Content/StoredImages"
+    imagesPath: "Content/StoredImages",
+    locationUtc: -300, //in minuts
   },
   /*
   ** Headers of the page
@@ -41,6 +42,10 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   plugins: ['~/plugins/moment'],
+  
+  router: {
+    middleware: ['paramsToStore'], 
+  },
   /*
   ** Build configuration
   */

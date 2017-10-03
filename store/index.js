@@ -122,6 +122,9 @@ const createStore = () => {
       },
       setPlaceDetails(state, place){
         state.placeDetailsData.place = place;
+      },
+      setFilters(state, newFilters){
+        state.filters = newFilters
       }
     }
   })

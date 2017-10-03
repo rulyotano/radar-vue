@@ -54,7 +54,12 @@ const service = {
     */
     toServerDate(mDate){
         return mDate.format(service.formats.SERVER_DATE);
-    }
+    },
+
+    /**Get a server date string from a moment date, and state utc */
+    dateValueUtcOffet: function (date, stateUtc) {
+        return service.toServerDate(service.addUtcOffet(date, stateUtc));
+    },
 }
 
 export default service;

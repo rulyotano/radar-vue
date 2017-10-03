@@ -1,19 +1,14 @@
 import httpService from '~/services/http-service'
 import helperService from '~/services/helper-service'
 import _ from 'lodash'
+import filtersService from '~/services/filters-service'
 
 const service = {
     hightlights(){
         return httpService.get(`api/event/highlights`).then(response=>response.Data);
     },
     list(filters = {}){
-        let params = {
-            model: {
-                page: filters.page || 0,
-                pageSize: filters.pageSize || 12,                 
-            }
-        };
-        return httpService.get(`api/event/list`, params);
+        return httpService.get(`api/event/list`, filtersService.mapFiltersToRequestArgs(filters));
     },
     details(eventId){
         let params = {

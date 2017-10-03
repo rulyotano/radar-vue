@@ -32,7 +32,8 @@ export default {
     SiteFooter,
     GoTopButton,
     SideBar
-  }
+  },  
+  scrollToTop: true
 }
 </script>
 

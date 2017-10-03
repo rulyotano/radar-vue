@@ -4,7 +4,11 @@
             <ul class="filter-nav">
                 
                 <li v-for="(item, index) in dateOptions" :key="index">
-                    <a class="filter-nav-i" :class="{'active' : dateFilter === item.key}">{{item.name}}</a>
+                    <a class="filter-nav-i" 
+                       :class="{'active' : dateFilter === item.key}"
+                       @click="setDateFilter(item.key)">
+                       {{item.name}}
+                    </a>
                 </li>
 
                 <li class="filter-nav-i-t"/>
@@ -33,7 +37,7 @@
         },
         data(){
             return {
-                dateOptions: searchConstants.dateOptions
+                dateOptions: searchConstants.dateOptions()
             }
         },
         computed: {
@@ -49,6 +53,11 @@
         methods:{
             loadMoreEvents(){
                 this.$store.dispatch("loadMoreEvents")
+            },
+            setDateFilter(date){
+                // console.log(this.$router)
+                // console.log(this.$route)
+                this.$router.push({ query: {...this.$router.params, date } })
             }
         }        
     }
