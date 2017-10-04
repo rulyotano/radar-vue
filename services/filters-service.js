@@ -1,5 +1,7 @@
 import searchConstantsService from '~/services/search-constants-service'
 import dateService from '~/services/date-service'
+import configService from '~/services/config-service'
+
 const service = {
     mapParamsToFilters(routeParams){
         let result = {}
@@ -17,6 +19,12 @@ const service = {
         if (filters.date){
             params.model.date = service.getDateRange(filters.date)
         }
+        if (filters.placeId)
+            params.model.placeId = filters.placeId
+            
+        if (filters.artistId)
+            params.model.artistId = filters.artistId
+
         return params;
     },
     getDateRange: function (dateFilter) {
@@ -28,7 +36,7 @@ const service = {
         if (begin == null && end == null)
             return null;
 
-        var stateUtc = process.env.locationUtc;
+        var stateUtc = configService.locationUtc();
 
         var beginF = begin != null ? dateService.dateValueUtcOffet(begin, stateUtc) : null,
             endF = end != null ? dateService.dateValueUtcOffet(end, stateUtc) : null;

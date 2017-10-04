@@ -17,7 +17,8 @@
     "ismobilejs": "^0.4.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "nuxt": "^1.0.0-rc8"
+    "nuxt": "^1.0.0-rc8",
+    "vue-spinner": "^1.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

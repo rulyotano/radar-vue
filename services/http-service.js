@@ -1,4 +1,5 @@
 import axios from 'axios'
+import configService from '~/services/config-service'
 
 const success = response => {
     return response.data;    
@@ -8,12 +9,15 @@ const fail = error => {
     console.log(error);
 };
 
+let apiUrl = configService.apiUrl()
+let adminUrl = configService.adminUrl()
+
 const service = {
     get(url, params){
-        return axios.get(`${process.env.apiUrl}/${url}`, {params}).then(success).catch(fail);
+        return axios.get(`${apiUrl}/${url}`, {params}).then(success).catch(fail);
     },
     post(url, data){
-        return axios.post(`${process.env.apiUrl}/${url}`, data).then(success).catch(fail);
+        return axios.post(`${apiUrl}/${url}`, data).then(success).catch(fail);
     },
     /**Get the create event url
      * @param artist - Create event in artist
@@ -32,7 +36,7 @@ const service = {
         }
         url = url.replace(/\//g, '%2F')
         url = url.replace(/#/g, '%23')
-        return `${process.env.adminUrl}/Account/Login?ReturnUrl=${url}`;
+        return `${adminUrl}/Account/Login?ReturnUrl=${url}`;
     }
 };
 

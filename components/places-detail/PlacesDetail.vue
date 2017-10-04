@@ -33,7 +33,10 @@
                 <span v-if="totalEvents" class="stb-s-lb-r">{{totalEvents}} Resultados </span>
             </h2>
 
-            <EventList :events="events" :placeId="place.Id" :eventsAdd="true"/>
+            <EventList :events="events" :placeId="place.Id" :eventsAdd="lastPage"/>
+
+            <ViewMoreButton v-if="!lastPage && !loadingMore" @click="loadMoreEvents()"/>
+            <Loading :loading="loadingMore"/>
 
         </div>
 
@@ -51,10 +54,11 @@
     import EventList from '~/components/events-list/EventList.vue'
     import imagesService from '~/services/images-service'
     import seoService from '~/services/seo-service'
+    import ViewMoreButton from '~/components/common/ViewMoreButton.vue'
+    import Loading from '~/components/common/Loading.vue'
     import _ from 'lodash'
     export default {
-        components:{ DivImage, EventList },
-        props:["place"], 
+        components:{ DivImage, EventList, ViewMoreButton, Loading },
         head(){
             let meta = []
             let desc = ""
@@ -93,19 +97,20 @@
             fullAddress(){
                 return this.place ? radarPlaceService.getFullAddress(this.place) : ""
             },
-            events(){
-                let events = _.get(this.place, "Events")
-                if (_.isEmpty(events))
-                    return []
-                return events
-            },
             totalEvents(){
                 return _.get(this.place, "TotalEvents")
-            }
+            },
+            place(){ return this.$store.state.placeDetailsData.place },
+            events(){ return this.$store.state.placeDetailsData.events },
+            lastPage(){ return this.$store.state.placeDetailsData.lastPage },
+            loadingMore(){ return this.$store.state.placeDetailsData.loadingMore }
         },
         methods:{
             share(){
                 console.log("share")
+            },
+            loadMoreEvents(){
+                this.$store.dispatch('loadMoreEventsPlace', this.place.Id)                
             }
         }
     }

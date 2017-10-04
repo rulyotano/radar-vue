@@ -1,6 +1,6 @@
 <template>
     <div>
-        <PlacesDetail :place="place"/>
+        <PlacesDetail/>
     </div>
 </template>
 
@@ -15,9 +15,6 @@
             // Must be a number
             return !!validParams.id
         }, 
-        computed:{
-            place(){ return this.$store.state.placeDetailsData.place }
-        },
         fetch({store, params}){
             let validParams = helperService.validateParamsGuid(params.placeId, params.description)
             return radarPlaceService.details(validParams.id)

@@ -172,7 +172,6 @@
             if (this.event && this.event.Name){
                 meta.push({ hid: 'faTitle', id: 'faTitle', property: 'og:title', content: this.event.Name })
             }
-            // meta.push({ hid: 'faUrl', id: 'faUrl', property: 'og:url', content: `${process.env.apiUrl}${this.$route.path}`  })
             return {
                 title: this.event && this.event.Name ? `Radar - ${this.event.Name}` : seoService.DEFAULT_TITLE,
                 meta

@@ -1,7 +1,7 @@
 <template>
     <div class="row s-row" v-if="!loading">
         <template v-for="group in groupedEvents">
-            <div v-if="groupedEvents.length > 1" class="col-md-12 col-sm-12 h-event-t" :key="group.key">{{group.text}}</div>
+            <div v-if="grouped && groupedEvents.length > 1" class="col-md-12 col-sm-12 h-event-t event-group-header" :key="group.key">{{group.text}}</div>
             <EventItem v-for="event in group.items" :event="event" :key="event.Id" :imagePriority="imagePriority"/>
         </template>
         <div class="col-md-3 col-sm-4" v-if="eventsAdd">
@@ -18,7 +18,7 @@
     import _ from 'lodash'
     export default {
         components: { EventItem },
-        props: ["events", "artistId", "placeId", "eventsAdd", "loading"],
+        props: ["events", "artistId", "placeId", "eventsAdd", "loading", "grouped"],
         computed:{
             createEventUrl(){
                 return httpService.createEventUrl(this.artistId, this.placeId)
@@ -56,5 +56,8 @@
 </script>
 
 <style scoped>
+.event-group-header{
+    margin-top: 15px
+}
 
 </style>

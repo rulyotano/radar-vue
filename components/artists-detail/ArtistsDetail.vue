@@ -27,7 +27,10 @@
                 <span v-if="totalEvents" class="stb-s-lb-r">{{totalEvents}} Resultados </span>
             </h2>
 
-            <EventList :events="events" :artistId="artist.Id" :eventsAdd="true"/>
+            <EventList :events="events" :artistId="artist.Id" :eventsAdd="lastPage"/>
+
+            <ViewMoreButton v-if="!lastPage && !loadingMore" @click="loadMoreEvents()"/>
+            <Loading :loading="loadingMore"/>
 
         </div>
 
@@ -45,9 +48,10 @@
     import imagesService from '~/services/images-service'
     import seoService from '~/services/seo-service'
     import _ from 'lodash'
+    import ViewMoreButton from '~/components/common/ViewMoreButton.vue'
+    import Loading from '~/components/common/Loading.vue'
     export default {
-        components:{ DivImage, EventList },
-        props:["artist"],
+        components:{ DivImage, EventList, ViewMoreButton, Loading },
         head(){
             let meta = []
             let desc = ""
@@ -82,11 +86,18 @@
             },
             totalEvents(){
                 return _.get(this.artist, "TotalEvents")
-            }
+            },
+            artist(){ return this.$store.state.artistDetailsData.artist },
+            events(){ return this.$store.state.artistDetailsData.events },
+            lastPage(){ return this.$store.state.artistDetailsData.lastPage },
+            loadingMore(){ return this.$store.state.artistDetailsData.loadingMore }
         },
         methods:{
             share(){
                 console.log("share")
+            },
+            loadMoreEvents(){
+                this.$store.dispatch('loadMoreEventsArtist', this.artist.Id)                
             }
         }
     }

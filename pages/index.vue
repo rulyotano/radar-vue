@@ -33,7 +33,7 @@ export default {
     GoTopButton,
     SideBar
   },  
-  scrollToTop: true
+  // scrollToTop: true
 }
 </script>
 

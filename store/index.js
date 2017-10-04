@@ -7,6 +7,18 @@ const checkIfMobile = (context) => {
   return isMobile(userAgent).any
 }
 
+const _setMoreEventsBase = (stateEventsData, moreEventsData)=>{
+  if (moreEventsData && moreEventsData.Data)
+    return {
+      ...stateEventsData,
+      lastPage: moreEventsData.LastPage,
+      page: moreEventsData.Page,
+      total: moreEventsData.Total,
+      events: [...stateEventsData.events, ...moreEventsData.Data] 
+    }
+  return stateEventsData
+}
+
 const createStore = () => {
   let store = new Vuex.Store({
     state: {
@@ -24,10 +36,20 @@ const createStore = () => {
         event: null
       },
       artistDetailsData: {
-        artist: null
+        artist: null,
+        events: [],
+        page:0,
+        total: 0,
+        lastPage: false,
+        loadingMore: false
       },
       placeDetailsData: {
-        place: null
+        place: null,
+        events: [],
+        page:0,
+        total: 0,
+        lastPage: false,
+        loadingMore: false
       },
       filters: {
         time_s: undefined,
@@ -64,21 +86,37 @@ const createStore = () => {
                   .then(eventsData => commit('setEvents', eventsData))
                   .finally(()=>commit('setEventLoading', false));
       },
-      loadMoreEvents({commit}){
-        commit('setEventLoadingMore', true)
-        let filters = this.state.filters
-        filters.page = this.state.eventsData.page + 1
-        
-        return radarEventsService.list(this.state.filters)
-                  .then(moreEventsData => commit('setMoreEvents', moreEventsData))
-                  .finally(()=>commit('setEventLoadingMore', false));
-
-        return radarEventsService.list()
-      },
       loadEventDetails({commit}, eventId){
         commit('setEventDetails', null)
         radarEventsService.details(eventId)
                   .then(event=> commit('setEventDetails', event))
+      },
+
+      //more events
+      loadMoreEvents({commit}){
+        commit('setEventLoadingMore', { loading:true })
+        let filters = {...this.state.filters}
+        filters.page = this.state.eventsData.page + 1
+        
+        return radarEventsService.list(filters)
+                  .then(moreEventsData => commit('setMoreEvents', { moreEventsData }))
+                  .finally(()=>commit('setEventLoadingMore', { loading:false }));
+      },
+      loadMoreEventsArtist({commit}, artistId){
+        commit('setEventLoadingMore', { loading:true, source: 'artist' })
+        let args = { page: this.state.artistDetailsData.page + 1, pageSize: 8, artistId }
+        
+        return radarEventsService.list(args)
+                  .then(moreEventsData => commit('setMoreEvents', { moreEventsData, source: 'artist' }))
+                  .finally(()=>commit('setEventLoadingMore', { loading:false, source: 'artist' }));
+      },
+      loadMoreEventsPlace({commit}, placeId){
+        commit('setEventLoadingMore', { loading:true, source: 'place' })
+        let args = { page: this.state.placeDetailsData.page + 1, pageSize: 8, placeId }
+        
+        return radarEventsService.list(args)
+                  .then(moreEventsData => commit('setMoreEvents', { moreEventsData, source: 'place' }))
+                  .finally(()=>commit('setEventLoadingMore', { loading:false, source: 'place' }));
       }
     },
     mutations: {
@@ -98,30 +136,55 @@ const createStore = () => {
             events: eventsData.Data
           }
       },
-      setMoreEvents(state, moreEventsData){
-        if (moreEventsData && moreEventsData.Data)
-          state.eventsData = {
-            ...state.eventsData,
-            lastPage: moreEventsData.LastPage,
-            page: moreEventsData.Page,
-            total: moreEventsData.Total,
-            events: [...state.eventsData.events, ...moreEventsData.Data] 
-          }
+
+      setMoreEvents(state, { moreEventsData, source = "events"}){
+        switch (source){
+          case "events":
+            state.eventsData = _setMoreEventsBase(state.eventsData, moreEventsData)
+            break
+          case "artist":
+            state.artistDetailsData = _setMoreEventsBase(state.artistDetailsData, moreEventsData)
+            break
+          case "place":
+            state.placeDetailsData = _setMoreEventsBase(state.placeDetailsData, moreEventsData)
+            break
+        }        
       },
+
       setEventLoading(state, loading){
         state.eventsData.loading = loading;      
       },
-      setEventLoadingMore(state, loading){
-        state.eventsData.loadingMore = loading;
+      setEventLoadingMore(state, { loading, source = "events" }){
+        switch (source){
+          case "events":
+            state.eventsData.loadingMore = loading
+            break
+          case "artist":
+            state.artistDetailsData.loadingMore = loading
+            break
+          case "place":
+            state.placeDetailsData.loadingMore = loading
+            break
+        }
       },
       setEventDetails(state, event){
         state.eventDetailsData.event = event;
       },
       setArtistDetails(state, artist){
         state.artistDetailsData.artist = artist;
+        if (artist){
+          state.artistDetailsData.events = artist.Events
+          state.artistDetailsData.lastPage = artist.LastEventsPage
+          state.artistDetailsData.page = 0
+        }
       },
       setPlaceDetails(state, place){
         state.placeDetailsData.place = place;
+        if (place){
+          state.placeDetailsData.events = place.Events
+          state.placeDetailsData.lastPage = place.LastEventsPage
+          state.placeDetailsData.page = 0
+        }
       },
       setFilters(state, newFilters){
         state.filters = newFilters

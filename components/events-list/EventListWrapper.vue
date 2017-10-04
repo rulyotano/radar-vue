@@ -21,9 +21,10 @@
 
         <h1 class="stn-lb">{{category.displayEvents}}<span class="stb-lb-r">{{ total + ' Resultados'}} </span></h1>
 
-        <EventList :events="events" :loading="loading"/>
+        <EventList :events="events" :loading="loading" :eventsAdd="!hasMoreEvents" :grouped="true"/>
 
-        <button class="btn-m btn-primary btn-block add-button" v-if="hasMoreEvents" @click="loadMoreEvents()">Ver Más</button>        
+        <ViewMoreButton v-if="hasMoreEvents && !loadingMore" @click="loadMoreEvents()"/>
+        <Loading :loading="loadingMore"/>
     </div>
 </template>
 
@@ -31,9 +32,11 @@
     import searchConstants from '~/services/search-constants-service'
     import radarCategoriesService from '~/services/radar-categories-service'
     import EventList from '~/components/events-list/EventList.vue'
+    import ViewMoreButton from '~/components/common/ViewMoreButton.vue'
+    import Loading from '~/components/common/Loading.vue'
     export default {
         components:{
-            EventList
+            EventList, ViewMoreButton, Loading
         },
         data(){
             return {
@@ -48,6 +51,7 @@
                             radarCategoriesService.categoriesMap[this.$store.state.filters.cat] },
             hasMoreEvents(){ return !this.$store.state.eventsData.lastPage },            
             loading(){ return this.$store.state.eventsData.loading },            
+            loadingMore(){ return this.$store.state.eventsData.loadingMore },            
             events() { return this.$store.state.eventsData.events } 
         },
         methods:{
@@ -64,14 +68,4 @@
 </script>
 
 <style scoped>
-.add-button{
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    margin-bottom: 20px;
-}
-
-
-
 </style>
