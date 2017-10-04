@@ -18,6 +18,7 @@
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100px;
+    width: 50px;
+    margin-bottom: 10px
 }
 </style>
