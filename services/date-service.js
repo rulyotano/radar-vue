@@ -37,7 +37,7 @@ const service = {
      * @return {moment} 
      */
     addUtcOffet: function(mDate, stateUtc) {
-        return mDate.utcOffset(stateUtc).add(-1 * stateUtc, "m");
+        return moment(mDate).utcOffset(stateUtc).add(-1 * stateUtc, "m");
     },
 
     /**Build a moment date from server date string format
