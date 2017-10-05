@@ -56,7 +56,9 @@
     import seoService from '~/services/seo-service'
     import ViewMoreButton from '~/components/common/ViewMoreButton.vue'
     import Loading from '~/components/common/Loading.vue'
-    import _ from 'lodash'
+    import _ from 'lodash'    
+    import { LOAD_MORE_EVENTS_PLACE } from '~/store/action-types'
+
     export default {
         components:{ DivImage, EventList, ViewMoreButton, Loading },
         head(){
@@ -110,7 +112,7 @@
                 console.log("share")
             },
             loadMoreEvents(){
-                this.$store.dispatch('loadMoreEventsPlace', this.place.Id)                
+                this.$store.dispatch(LOAD_MORE_EVENTS_PLACE, this.place.Id)                
             }
         }
     }

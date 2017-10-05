@@ -15,6 +15,7 @@
 import imagesService from '~/services/images-service'
 import EventListWrapper from '~/components/events-list/EventListWrapper.vue'
 import DivImage from '~/components/common/image/DivImage.vue'
+import { LOAD_EVENTS } from '~/store/action-types'
 
 export default {
   components:{
@@ -26,7 +27,7 @@ export default {
     }
   },
   fetch({store, params}){
-    return store.dispatch('loadEvents');    
+    return store.dispatch(LOAD_EVENTS);    
   }
 }
 </script>

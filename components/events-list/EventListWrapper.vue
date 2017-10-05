@@ -34,6 +34,8 @@
     import EventList from '~/components/events-list/EventList.vue'
     import ViewMoreButton from '~/components/common/ViewMoreButton.vue'
     import Loading from '~/components/common/Loading.vue'
+    import { LOAD_MORE_EVENTS } from '~/store/action-types'
+
     export default {
         components:{
             EventList, ViewMoreButton, Loading
@@ -56,7 +58,7 @@
         },
         methods:{
             loadMoreEvents(){
-                this.$store.dispatch("loadMoreEvents")
+                this.$store.dispatch(LOAD_MORE_EVENTS)
             },
             setDateFilter(date){
                 // console.log(this.$router)

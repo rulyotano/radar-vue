@@ -50,6 +50,7 @@
     import _ from 'lodash'
     import ViewMoreButton from '~/components/common/ViewMoreButton.vue'
     import Loading from '~/components/common/Loading.vue'
+    import { LOAD_MORE_EVENTS_ARTIST } from '~/store/action-types'
     export default {
         components:{ DivImage, EventList, ViewMoreButton, Loading },
         head(){
@@ -97,7 +98,7 @@
                 console.log("share")
             },
             loadMoreEvents(){
-                this.$store.dispatch('loadMoreEventsArtist', this.artist.Id)                
+                this.$store.dispatch(LOAD_MORE_EVENTS_ARTIST, this.artist.Id)                
             }
         }
     }
