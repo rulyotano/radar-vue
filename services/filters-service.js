@@ -7,6 +7,8 @@ const service = {
         let result = {}
         if (routeParams.date)
             result.date = routeParams.date*1
+        if (routeParams.loc)
+            result.loc = routeParams.loc
         return result
     },
     mapFiltersToRequestArgs(filters){
@@ -24,10 +26,13 @@ const service = {
             
         if (filters.artistId)
             params.model.artistId = filters.artistId
+            
+        if (filters.loc)
+            params.model.location = filters.loc
 
         return params;
     },
-    getDateRange: function (dateFilter) {
+    getDateRange(dateFilter) {
         var dIndex = dateFilter;
         var date = searchConstantsService.getDateOption(dIndex);
 
@@ -42,6 +47,9 @@ const service = {
             endF = end != null ? dateService.dateValueUtcOffet(end, stateUtc) : null;
 
         return { begin: beginF, end: endF }
+    },
+    setFilters(router, filters){
+        router.push({ query: {...router.params, ...filters } })  
     }
 }
 

@@ -18,6 +18,8 @@ export const SET_PLACE_DETAILS = 'setPlaceDetails'
 
 export const SET_FILTERS = 'setFilters'
 
+export const SET_MENU_OPEN = 'setMenuOpen'
+
 export const EVENT_SOURCES = {
     EVENTS: "events",
     ARTIST: "artist",

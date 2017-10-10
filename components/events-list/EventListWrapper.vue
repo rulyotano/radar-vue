@@ -31,6 +31,7 @@
 <script>
     import searchConstants from '~/services/search-constants-service'
     import radarCategoriesService from '~/services/radar-categories-service'
+    import filtersService from '~/services/filters-service'
     import EventList from '~/components/events-list/EventList.vue'
     import ViewMoreButton from '~/components/common/ViewMoreButton.vue'
     import Loading from '~/components/common/Loading.vue'
@@ -63,7 +64,7 @@
             setDateFilter(date){
                 // console.log(this.$router)
                 // console.log(this.$route)
-                this.$router.push({ query: {...this.$router.params, date } })
+                filtersService.setFilters(this.$router, { date })
             }
         }        
     }

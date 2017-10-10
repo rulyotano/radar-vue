@@ -83,5 +83,8 @@ export default {
     },
     [types.SET_FILTERS](state, newFilters){
       state.filters = newFilters
+    },
+    [types.SET_MENU_OPEN](state, open){
+      state.menuOpen = open      
     }
   }

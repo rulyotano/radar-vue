@@ -8,6 +8,7 @@ const createStore = () => {
     state: {
       isMobile: false,
       hightlights: [],  //list of hight light events
+      menuOpen: false,
       eventsData: {
         page: 0,
         total: 0,
