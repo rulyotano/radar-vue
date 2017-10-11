@@ -9,6 +9,8 @@ const service = {
             result.date = routeParams.date*1
         if (routeParams.loc)
             result.loc = routeParams.loc
+        if (routeParams.cat)
+            result.cat = routeParams.cat
         return result
     },
     mapFiltersToRequestArgs(filters){
@@ -29,6 +31,9 @@ const service = {
             
         if (filters.loc)
             params.model.location = filters.loc
+            
+        if (filters.cat)
+            params.model.category = filters.cat
 
         return params;
     },
@@ -48,8 +53,9 @@ const service = {
 
         return { begin: beginF, end: endF }
     },
-    setFilters(router, filters){
-        router.push({ query: {...router.params, ...filters } })  
+    setFilters(router, route, filters){
+        // console.log(router)
+        router.push({ query: {...route.query, ...filters } })  
     }
 }
 

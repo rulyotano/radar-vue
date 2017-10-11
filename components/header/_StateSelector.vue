@@ -45,7 +45,7 @@
         },
         methods:{
             selectState(stateId){
-                filtersService.setFilters(this.$router, { loc: stateId || undefined })                
+                filtersService.setFilters(this.$router, this.$route, { loc: stateId || undefined })                
             },
             ...mapMutations({
                 setOpen: SET_MENU_OPEN

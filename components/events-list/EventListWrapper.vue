@@ -64,7 +64,7 @@
             setDateFilter(date){
                 // console.log(this.$router)
                 // console.log(this.$route)
-                filtersService.setFilters(this.$router, { date })
+                filtersService.setFilters(this.$router, this.$route, { date })
             }
         }        
     }
