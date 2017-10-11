@@ -55,7 +55,7 @@ const service = {
     },
     setFilters(router, route, filters){
         // console.log(router)
-        router.push({ query: {...route.query, ...filters } })  
+        router.push({ path: '/', query: {...route.query, ...filters } })  
     }
 }
 
