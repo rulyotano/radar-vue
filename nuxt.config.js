@@ -41,7 +41,7 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#3B8070' },
-  plugins: ['~/plugins/moment'],
+  plugins: ['~/plugins/moment', '~/plugins/promise.prototype.finally'],
   
   router: {
     middleware: ['paramsToStore'], 
@@ -50,7 +50,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['ismobilejs', 'axios', 'moment', 'lodash' ]
+    vendor: ['ismobilejs', 'axios', 'moment', 'lodash', 'promise.prototype.finally' ]
     /*
     ** Run ESLINT on save
     */

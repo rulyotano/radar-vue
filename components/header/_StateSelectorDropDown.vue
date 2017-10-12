@@ -38,7 +38,8 @@
         },
         methods:{
             selectState(stateId){
-                filtersService.setFilters(this.$router, this.$route, { loc: stateId || undefined })                
+                filtersService.setFilters(this.$router, this.$route, { loc: stateId || undefined })        
+                this.open = false        
             }
         }  
     }
