@@ -36,7 +36,7 @@
                 let result = []
 
                 _.forEach(grouped, (items, key)=>{
-                    let date = moment(key, dateService.formats.SERVER_DATE_ONLY_DATE);
+                    let date = moment(key, dateService.formats.SERVER_DATE_ONLY_DATE).add(3, 'hours');
                     let diff = date.diff(today, 'hours')        
                     let str = diff <= 23 ? 'hoy' :
                                 diff < 24*7-1 ? date.format('dddd') :
