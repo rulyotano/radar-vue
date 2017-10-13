@@ -10,22 +10,23 @@
             </a>
         </li>
 
-        <!--<li class="hidden-collapse search-row-h">
+        <li class="hidden-collapse search-row-h">
             <TextFilter/>
-        </li> -->
+        </li>
 
     </ul>
 </template>
 
 <script>
     import StateSelectorDropDown from '~/components/header/_StateSelectorDropDown.vue'
+    import TextFilter from '~/components/header/_TextFilter.vue'
     import { mapState } from 'vuex'
     import radarCategoriesService from '~/services/radar-categories-service'
     import filtersService from '~/services/filters-service'    
     import _ from 'lodash'
 
     export default {
-        components:{ StateSelectorDropDown },
+        components:{ StateSelectorDropDown, TextFilter },
         computed:{
             ...mapState({
                 category: (state)=> _.get(state, 'filters.cat')

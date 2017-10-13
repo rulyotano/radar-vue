@@ -11,6 +11,8 @@ const service = {
             result.loc = routeParams.loc
         if (routeParams.cat)
             result.cat = routeParams.cat
+        if (routeParams.q)
+            result.q = routeParams.q
         return result
     },
     mapFiltersToRequestArgs(filters){
@@ -34,6 +36,9 @@ const service = {
             
         if (filters.cat)
             params.model.category = filters.cat
+            
+        if (filters.q)
+            params.model.query = filters.q
 
         return params;
     },
